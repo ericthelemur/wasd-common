@@ -1,0 +1,46 @@
+{
+  "name": "wasd-common",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "",
+  "author": {
+    "name": "ericthelemur",
+    "email": "owenconnors1@gmail.com",
+    "url": ""
+  },
+  "devDependencies": {
+    "@parcel/config-default": "*",
+    "@parcel/core": "^2.11.0",
+    "@parcel/reporter-cli": "*",
+    "@parcel/validator-typescript": "*",
+    "concurrently": "*",
+    "glob": "^10.2.7",
+    "nodemon": "*",
+    "rimraf": "^5.0.5"
+  },
+  "dependencies": {},
+  "files": [
+    "extension",
+    "extension.js",
+    "dashboard",
+    "graphics"
+  ],
+  "keywords": [
+    "nodecg-bundle"
+  ],
+  "nodecg": {
+    "compatibleRange": "^2.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
