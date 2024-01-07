@@ -4,12 +4,13 @@ import './editable.scss';
 import { ElementType, useRef, useState } from 'react';
 import { CheckLg, PenFill, XLg } from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import ContentEditable from 'react-contenteditable';
 
 export interface EditableProps {
     text: string;
     setText: (text: string) => void;
-    type?: string;
+    type?: "single" | "multi";
     className?: string;
     textClasses?: string;
     prefix?: JSX.Element | string;
@@ -31,7 +32,7 @@ export default function Editable(props: EditableProps) {
         </div>
     } else {
         const submit = () => {
-            setText(editBox.current!.innerText);
+            setText(editBox.current!.value || editBox.current!.innerText);
             resetEditVal();
         };
         const keyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -43,12 +44,17 @@ export default function Editable(props: EditableProps) {
             setWasText(true);
             setTimeout(() => editBox.current?.focus(), 0);
         }
+        const classes = "editable input form-control " + (props.className || "");
         return <>
-            <ContentEditable innerRef={editBox} html={editVal}
-                className={"editable input form-control " + (props.className || "")}
-                onKeyDown={keyPress} onChange={(e) => { setEditVal(e.target.value) }}
-                onFocus={e => window.getSelection()!.selectAllChildren(e.target)}
-            />
+            {props.type === "multi" ?
+                <ContentEditable innerRef={editBox} className={classes} html={editVal}
+                    onKeyDown={keyPress} onChange={(e) => { setEditVal(e.target.value) }}
+                    onFocus={e => window.getSelection()!.selectAllChildren(e.target)}
+                /> :
+                <Form.Control ref={editBox} className={classes} defaultValue={editVal}
+                    onKeyDown={keyPress} autoFocus onFocus={e => e.target.select()}
+                />
+            }
             <Button variant="primary" type="submit" onClick={submit}><CheckLg /></Button>
             <Button variant="outline-primary" onClick={resetEditVal}><XLg /></Button>
         </>
