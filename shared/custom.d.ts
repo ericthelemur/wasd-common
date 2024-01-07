@@ -1,5 +1,3 @@
-import type NodeCG from '@nodecg/types';
-
 // Make typescript believe images can be included as Parcel expects
 declare module "*.svg" {
     export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -12,5 +10,3 @@ declare module "*.png" {
     const src: string;
     export default src;
 }
-
-declare const nodecg: NodeCG.ClientAPI;

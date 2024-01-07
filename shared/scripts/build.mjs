@@ -31,6 +31,7 @@ function argParse(def) {
     dashboard: argv.includes('--dashboard') || buildAll || buildDefault || buildBrowser,
     graphics: argv.includes('--graphics') || buildAll || buildDefault || buildBrowser,
     schemas: argv.includes('--schemas') || argv.includes('--types') || buildAll,
+    nodeModules: argv.includes('--node-modules'),
   }
   // If none provided, recall taking default
   if (!Object.values(args).find(v => v)) return argParse(true);
@@ -53,7 +54,9 @@ if (build.cleanOnly || build.clean) {
   if (build.dashboard) promises.push(rimraf("dashboard"));
   if (build.graphics) promises.push(rimraf("graphics"));
   if (build.schemas) promises.push(rimraf("src/types/schemas"));
-  if (build.all) promises.push(rimraf(".parcel-cache"));
+  if (build.all || build.nodeModules) promises.push(rimraf(".parcel-cache"));
+  if (build.nodeModules) promises.push(rimraf("node_modules"));
+
   await Promise.all(promises);
   console.log("Clean complete");
   if (build.cleanOnly) process.exit(0);
