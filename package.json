@@ -8,6 +8,15 @@
     "email": "owenconnors1@gmail.com",
     "url": ""
   },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-bootstrap": "^2.9.1",
+    "react-bootstrap-icons": "^1.10.3",
+    "react-contenteditable": "^3.3.7",
+    "react-transition-group": "^4.4.5",
+    "react-dom": "^18.0.0"
+  },
   "devDependencies": {
     "@nodecg/types": "^2.0.0",
     "@parcel/config-default": "*",
@@ -19,9 +28,10 @@
     "glob": "^10.2.7",
     "nodemon": "*",
     "rimraf": "^5.0.5",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.3",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.0.0"
   },
-  "dependencies": {},
   "files": [
     "extension",
     "extension.js",
