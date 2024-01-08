@@ -14,11 +14,12 @@ interface DndTransitionsListProps<T> {
     data: T[];
     ids: string[];
     content: (id: string, index: number, item: T, provided: DraggableProvided) => JSX.Element;
+    type?: string;
 }
 
-export function DnDTransitionsList<T>({ id, ids, data, content }: DndTransitionsListProps<T>) {
+export function DnDTransitionsList<T>({ id, ids, data, content, type }: DndTransitionsListProps<T>) {
     return (
-        <Droppable droppableId={id}>
+        <Droppable droppableId={id} type={type}>
             {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                     <TransitionGroup className='pool vstack'>

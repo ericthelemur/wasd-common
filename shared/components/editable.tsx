@@ -5,6 +5,7 @@ import { ElementType, useRef, useState } from 'react';
 import { CheckLg, PenFill, XLg } from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import ContentEditable from 'react-contenteditable';
 
 export interface EditableProps {
@@ -14,7 +15,7 @@ export interface EditableProps {
     className?: string;
     textClasses?: string;
     prefix?: JSX.Element | string;
-    as?: ElementType;
+    container?: boolean;
 }
 
 export default function Editable(props: EditableProps) {
@@ -45,7 +46,8 @@ export default function Editable(props: EditableProps) {
             setTimeout(() => editBox.current?.focus(), 0);
         }
         const classes = "editable input form-control " + (props.className || "");
-        return <>
+
+        const content = <>
             {props.type === "multi" ?
                 <ContentEditable innerRef={editBox} className={classes} html={editVal}
                     onKeyDown={keyPress} onChange={(e) => { setEditVal(e.target.value) }}
@@ -58,5 +60,6 @@ export default function Editable(props: EditableProps) {
             <Button variant="primary" type="submit" onClick={submit}><CheckLg /></Button>
             <Button variant="outline-primary" onClick={resetEditVal}><XLg /></Button>
         </>
+        return props.container ? <InputGroup>{content}</InputGroup> : content
     }
 }

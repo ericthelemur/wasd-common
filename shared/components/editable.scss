@@ -30,7 +30,10 @@ div.editable:not(.input) {
 
     &:hover {
         border-bottom: var(--bs-border-color) var(--bs-border-width) dotted;
-        margin-bottom: calc(-1 * var(--bs-border-width));
+
+        &:not(.input-group-text) {
+            margin-bottom: calc(-1 * var(--bs-border-width));
+        }
     }
 
     &>svg.icon {
