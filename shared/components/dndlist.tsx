@@ -35,7 +35,7 @@ export function DnDTransitionsList<T>({ id, ids, data, content, type }: DndTrans
             {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                     <TransitionGroup className='pool vstack'>
-                        {data.map((d, i) => DnDTransitionItem(i, ids[i], (p) => content(i, ids[i], d, p)))}
+                        {data.map((d, i) => DnDTransitionItem(i, `${id}::${ids[i]}`, (p) => content(i, ids[i], d, p)))}
                         {provided.placeholder}
                     </TransitionGroup>
                 </div>
@@ -69,7 +69,7 @@ export function DnDGroupList<T>(props: DnDGroupListProps<T>) {
             <div className="btn btn-outline-secondary grip" {...provided.dragHandleProps}><GripVertical /></div>
             {props.functions.onHandle && <InsertHandle
                 onClick={() => props.functions.onHandle!(props.id, index, id, item)} />}
-            {props.functions.content(props.id, index, `${props.id}::${id}`, item)}
+            {item ? props.functions.content(props.id, index, `${props.id}::${id}`, item) : `Unknown entry for ${props.id}::${id}`}
             {props.functions.onRemove && <Button variant="outline-secondary"
                 onClick={() => props.functions.onRemove!(props.id, index, id, item)}><XLg /></Button>}
         </InputGroup>
@@ -131,7 +131,7 @@ interface TwoColProps<T> {
 }
 
 export function TwoColDnD<T>(props: TwoColProps<T>) {
-    return <div className="fill">
+    return <div className="fill d-flex">
         <DragDropContext {...(props.context ?? {})} onDragEnd={props.onDragEnd}>
             <ColDnD {...props.left} />
             <ColDnD {...props.right} />
