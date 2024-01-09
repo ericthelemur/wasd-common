@@ -44,3 +44,13 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+svg.bi,
+svg[class^="bi-"],
+svg[class*=" bi-"] {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    line-height: 1;
+    vertical-align: -.125em;
+}
