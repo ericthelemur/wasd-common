@@ -128,13 +128,12 @@ interface TwoColProps<T> {
     left: ColProps<T>;
     right: ColProps<T>;
 
-    context?: DragDropContextProps;
     onDragEnd: DragDropContextProps["onDragEnd"];
 }
 
 export function TwoColDnD<T>(props: TwoColProps<T>) {
     return <div className="fill d-flex">
-        <DragDropContext {...(props.context ?? {})} onDragEnd={props.onDragEnd}>
+        <DragDropContext onDragEnd={props.onDragEnd}>
             <ColDnD {...props.left} />
             <ColDnD {...props.right} />
         </DragDropContext>
