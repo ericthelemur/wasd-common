@@ -35,7 +35,7 @@ export function DnDTransitionsList<T>({ id, ids, data, content, type }: DndTrans
     return (
         <Droppable droppableId={id} type={type}>
             {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}>
+                <div className="droppable" {...provided.droppableProps} ref={provided.innerRef}>
                     <TransitionGroup className='pool vstack'>
                         {data.map((d: T, i) => DnDTransitionItem(i, `${id}::${ids[i]}`, (p) => content(i, ids[i], d, p)))}
                         {provided.placeholder}
@@ -78,12 +78,12 @@ export function DnDGroupList<T>(props: DnDGroupListProps<T>) {
                 onClick={() => props.functions.onRemove!(props.id, index, id, item)}><XLg /></Button>}
         </InputGroup>
     }
-    return <Stack className="m-2">
+    return <div className="dnd-list m-2">
         <DnDTransitionsList {...props} content={newContent} />
         {props.functions.onHandle && <div className="position-relative mt-2">
             <InsertHandle onClick={() => props.functions.onHandle!(props.id, props.data.length, null, null)} />
         </div>}
-    </Stack>
+    </div>
 }
 
 export interface GroupProps<T> extends DnDBase<T> {
@@ -106,7 +106,7 @@ function GroupDnD<T>(props: GroupDnDProps<T>) {
     if (props.functions.onHandle) functions.onHandle = (gid: string, index: number, id: string | null, item: T | null) => props.functions.onHandle!(gid, props.group, index, id, item);
     if (props.functions.onRemove) functions.onRemove = (gid: string, index: number, id: string | null, item: T | null) => props.functions.onRemove!(gid, props.group, index, id, item);
 
-    return <div className="dnd-group vstack">
+    return <div className="dnd-group">
         {props.group.title && <h2>{props.group.title}</h2>}
         <DnDGroupList {...props.group} functions={functions} />
     </div>
@@ -121,7 +121,7 @@ interface ColProps<T> {
 }
 
 function ColDnD<T>(props: ColProps<T>) {
-    return <div className="dnd-col w-50 h-100 overflow-auto">
+    return <div className="dnd-col w-50 h-100 overflow-auto position-relative p-2">
         {props.title && <h2>{props.title}</h2>}
         {props.groups.map((g) => <GroupDnD key={g.id} group={g} functions={props.functions} />)}
         {props.showBin && <div className="trash"><Trash className="queue-trash" /></div>}
