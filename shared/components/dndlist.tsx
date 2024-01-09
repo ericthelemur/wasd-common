@@ -25,13 +25,14 @@ interface DnDBase<T> {
     data: T[];
     ids: string[];
     type?: string;
+    tail?: JSX.Element;
 }
 
 interface DndTransitionsListProps<T> extends DnDBase<T> {
     content: (index: number, id: string, item: T, provided: DraggableProvided) => JSX.Element;
 }
 
-export function DnDTransitionsList<T>({ id, ids, data, content, type }: DndTransitionsListProps<T>) {
+export function DnDTransitionsList<T>({ id, ids, data, content, type, tail }: DndTransitionsListProps<T>) {
     return (
         <Droppable droppableId={id} type={type}>
             {(provided) => (
@@ -40,6 +41,7 @@ export function DnDTransitionsList<T>({ id, ids, data, content, type }: DndTrans
                         {data.map((d: T, i) => DnDTransitionItem(i, `${id}::${ids[i]}`, (p) => content(i, ids[i], d, p)))}
                         {provided.placeholder}
                     </TransitionGroup>
+                    {tail}
                 </div>
             )}
         </Droppable>
@@ -79,10 +81,11 @@ export function DnDGroupList<T>(props: DnDGroupListProps<T>) {
         </InputGroup>
     }
     return <div className="dnd-list m-2">
-        <DnDTransitionsList {...props} content={newContent} />
-        {props.functions.onHandle && <div className="position-relative mt-2">
-            <InsertHandle onClick={() => props.functions.onHandle!(props.id, props.data.length, null, null)} />
-        </div>}
+        <DnDTransitionsList {...props} content={newContent}
+            tail={props.functions.onHandle && <div className="position-relative mt-2">
+                <InsertHandle onClick={() => props.functions.onHandle!(props.id, props.data.length, null, null)} />
+            </div>}
+        />
     </div>
 }
 
