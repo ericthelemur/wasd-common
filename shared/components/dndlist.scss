@@ -1,0 +1,69 @@
+.trash {
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f008;
+
+    pointer-events: none;
+
+    & .queue-trash {
+        font-size: 3em;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.item-enter {
+    opacity: 0;
+    max-height: 0;
+}
+
+.item-enter-active {
+    opacity: 1;
+    max-height: 100px;
+    transition: opacity 250ms ease-in, max-height 250ms ease-in;
+}
+
+.item-exit {
+    opacity: 1;
+    max-height: 100px;
+}
+
+.item-exit-active {
+    opacity: 0;
+    max-height: 0;
+    transition: opacity 500ms ease-in, max-height 500ms ease-in;
+}
+
+.addBtn {
+    width: 100%;
+    height: 0.5em;
+
+    position: absolute;
+    top: -0.5em;
+    left: 0;
+    z-index: 1000;
+
+    cursor: pointer;
+
+    & .addIcon {
+        visibility: hidden;
+        position: absolute;
+        height: 4em;
+        max-width: 100%;
+        object-fit: contain;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    &:hover .addIcon {
+        visibility: visible;
+    }
+}

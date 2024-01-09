@@ -37,3 +37,10 @@
 .w-0 {
     width: 0;
 }
+
+.line-clamp-1 {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

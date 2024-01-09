@@ -1,7 +1,9 @@
+import './dndlist.scss';
+
 import {
     DragDropContext, DragDropContextProps, Draggable, DraggableProvided, Droppable
 } from 'react-beautiful-dnd';
-import { GripVertical, XLg } from 'react-bootstrap-icons';
+import { GripVertical, Trash, XLg } from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button';
 import CloseButton from 'react-bootstrap/CloseButton';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -104,7 +106,7 @@ function GroupDnD<T>(props: GroupDnDProps<T>) {
     if (props.functions.onHandle) functions.onHandle = (gid: string, index: number, id: string | null, item: T | null) => props.functions.onHandle!(gid, props.group, index, id, item);
     if (props.functions.onRemove) functions.onRemove = (gid: string, index: number, id: string | null, item: T | null) => props.functions.onRemove!(gid, props.group, index, id, item);
 
-    return <div className="dnd-group">
+    return <div className="dnd-group vstack">
         {props.group.title && <h2>{props.group.title}</h2>}
         <DnDGroupList {...props.group} functions={functions} />
     </div>
@@ -115,12 +117,14 @@ interface ColProps<T> {
     title?: string;
     groups: GroupProps<T>[];
     functions: GroupDnDProps<T>["functions"];
+    showBin?: boolean;
 }
 
 function ColDnD<T>(props: ColProps<T>) {
     return <div className="dnd-col w-50 h-100 overflow-auto">
         {props.title && <h2>{props.title}</h2>}
         {props.groups.map((g) => <GroupDnD key={g.id} group={g} functions={props.functions} />)}
+        {props.showBin && <div className="trash"><Trash className="queue-trash" /></div>}
     </div>
 }
 
@@ -129,11 +133,12 @@ interface TwoColProps<T> {
     right: ColProps<T>;
 
     onDragEnd: DragDropContextProps["onDragEnd"];
+    onBeforeDragStart?: DragDropContextProps["onBeforeDragStart"];
 }
 
 export function TwoColDnD<T>(props: TwoColProps<T>) {
     return <div className="fill d-flex">
-        <DragDropContext onDragEnd={props.onDragEnd}>
+        <DragDropContext onDragEnd={props.onDragEnd} onBeforeDragStart={props.onBeforeDragStart}>
             <ColDnD {...props.left} />
             <ColDnD {...props.right} />
         </DragDropContext>
