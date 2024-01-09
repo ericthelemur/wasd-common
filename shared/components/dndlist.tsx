@@ -86,8 +86,14 @@ export function DnDGroupList<T>(props: DnDGroupListProps<T>) {
     </div>
 }
 
+export interface Icon {
+    iconType: 'svg';
+    name?: string;
+    icon: string;
+}
 export interface GroupProps<T> extends DnDBase<T> {
     title?: string;
+    icon?: Icon | undefined;
     original: string[];
 }
 type TDnDGroupAction<T> = ((gid: string, group: GroupProps<T>, index: number, id: string | null, item: T | null) => void);
@@ -101,13 +107,22 @@ interface GroupDnDProps<T> {
     }
 }
 
+function groupIcon(icon: Icon | undefined) {
+    if (!icon) return;
+    switch (icon.iconType) {
+        case "svg":
+            return <small dangerouslySetInnerHTML={{ __html: icon.icon }} />
+    }
+}
+
 function GroupDnD<T>(props: GroupDnDProps<T>) {
     const functions: DnDGroupListProps<T>["functions"] = { content: (gid: string, index: number, id: string, item: T) => props.functions.content(gid, props.group, index, id, item) }
     if (props.functions.onHandle) functions.onHandle = (gid: string, index: number, id: string | null, item: T | null) => props.functions.onHandle!(gid, props.group, index, id, item);
     if (props.functions.onRemove) functions.onRemove = (gid: string, index: number, id: string | null, item: T | null) => props.functions.onRemove!(gid, props.group, index, id, item);
 
     return <div className="dnd-group">
-        {props.group.title && <h2>{props.group.title}</h2>}
+        {(props.group.title || props.group.icon) &&
+            <h4 className="mb-0">{groupIcon(props.group.icon)} {props.group.title}</h4>}
         <DnDGroupList {...props.group} functions={functions} />
     </div>
 }
