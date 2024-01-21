@@ -31,8 +31,13 @@ input.editable,
     font-weight: inherit;
     padding-top: 0;
     padding-bottom: 0;
-    flex-grow: 1 !important;
-    min-width: 50%;
+    flex-grow: 3 !important;
+    // min-width: 50%;
+}
+
+.input-group>div.editable:not(.input) {
+    width: 0;
+    flex-grow: 1;
 }
 
 .input-group:has(input.editable) div.editable:not(.input),
